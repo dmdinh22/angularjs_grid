@@ -1,0 +1,37 @@
+<h1>Found ({{customersCount}}) Customers</h1>  
+<table class="table table-striped">  
+  <thead>
+    <tr>
+      <th ng-repeat="header in headers">
+        <sort-by onsort="onSort" sortdir="filterCriteria.sortDir" sortedby="filterCriteria.sortedBy" sortvalue="{{ header.value }}">{{ header.title }}</sort-by>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><input on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.id" type="text" /></td>
+      <td><input on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.name" type="text" /></td>
+      <td><input on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.email" type="text" /></td>
+      <td><input on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.city" type="text" /></td>
+      <td>
+        <select ng-change="filterResult()" ng-model="filterCriteria.state" ng-options="state for state in states" >
+          <option value=""> </option>
+        </select>
+      </td>
+    </tr>
+    <tr ng-repeat="customer in customers">
+      <td><a href="/#/customer{{customer.id}}">{{customer.id}}</a></td>
+      <td>{{customer.name}}</td>
+      <td>{{customer.email}}</td>
+      <td>{{customer.city}}</td>
+      <td>{{customer.state}}</td>
+    </tr>
+  </tbody>
+</table>  
+<div ng-show="customersCount == 0">  
+  <h3>No Customers Found</h3>
+</div>  
+<div ng-show="totalPages > 1" class="align-center">  
+  <pagination num-pages="totalPages" current-page="filterCriteria.pageNumber" max-size="10" class="" boundary-links="true"
+ on-select-page="selectPage(page)"></pagination>
+</div>  
